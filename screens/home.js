@@ -1,11 +1,31 @@
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
+import { useState } from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import BarcodeMask from 'react-native-barcode-mask';
-
+import Torch from 'react-native-torch';
 
 import React from 'react'
+import Icons from '../Icons';
+
+const handleBarCodeScanned = ({ type, data }) => {
+    console.log(`Scanned data: ${data}`)
+    console.log(`Scanned Type: ${type}`)
+}
 
 const Home = () => {
+
+    const [FlashOn, setFlashOn] = useState(false)
+    const [Type, setType] = useState(false)
+
+    const HandleRotate = () => {
+        setType(!Type)
+    }
+
+    const HandleTorch = () => {
+        setFlashOn(!FlashOn)
+        Torch.switchState(FlashOn)
+    }
+
     return (
         <View style={styles.flexCenter}>
             <View>
@@ -13,14 +33,24 @@ const Home = () => {
                     // onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                     style={styles.camDisplay}
                     barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+                    onBarCodeScanned={handleBarCodeScanned}
+                    type={Type ? 'front' : 'back'}
                 >
                     <BarcodeMask edgeColor='#FFB824' useNativeDriver={true} animatedLineColor='#FFB824' showAnimatedLine={true} />
                 </BarCodeScanner>
 
             </View>
             {/* This is where we style our top bar pretty cool right */}
-            <View style={{ position: 'absolute', backgroundColor: 'red', top: 0, margin: 50 }}>
-                <Text style={{ color: 'white' }}>Hello World</Text>
+            <View style={{ flex: 1, flexDirection: 'row', position: 'absolute', backgroundColor: '#333333', alignItems: 'center', top: 0, margin: 50, height: 50, borderRadius: 8, gap: 70 }}>
+                <TouchableOpacity style={{ margin: 20 }} onPress={HandleTorch}>
+                    <Image source={Icons.FlashIcon} resizeMode="contain" style={{ height: 30, width: 30, tintColor: 'white' }} />
+                </TouchableOpacity>
+                <TouchableOpacity style={{ margin: 20 }}>
+                    <Image source={Icons.ImageFrame} resizeMode="contain" style={{ height: 30, width: 30, tintColor: 'white' }} />
+                </TouchableOpacity>
+                <TouchableOpacity style={{ margin: 20 }} onPress={HandleRotate}>
+                    <Image source={Icons.Rotate} resizeMode="contain" style={{ height: 30, width: 30, tintColor: 'white' }} />
+                </TouchableOpacity>
             </View>
         </View>
     )

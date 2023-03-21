@@ -7,13 +7,13 @@ import {
     StyleSheet
 } from "react-native";
 import Icons from "../Icons";
-import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-import { Home } from "../screens";
+import { Home, Generate, History } from "../screens";
 
 const Tab = createBottomTabNavigator()
 
-const CustomButton = ({ children, onpress }) => {
+const CustomButton = ({ children, onPress }) => {
     return (
         <TouchableOpacity style={{
             top: -40,
@@ -21,6 +21,7 @@ const CustomButton = ({ children, onpress }) => {
             alignItems: 'center',
             ...styles.shadow
         }}
+            onPress={onPress}
         >
             {children}
         </TouchableOpacity>
@@ -49,7 +50,7 @@ const Tabs = () => {
         >
             <Tab.Screen
                 name="History"
-                component={Home}
+                component={History}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -86,7 +87,7 @@ const Tabs = () => {
             />
             <Tab.Screen
                 name="Generate"
-                component={Home}
+                component={Generate}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
