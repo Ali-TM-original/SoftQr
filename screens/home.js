@@ -2,8 +2,6 @@ import { View, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-nat
 import { useState } from 'react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import BarcodeMask from 'react-native-barcode-mask';
-import Torch from 'react-native-torch';
-
 import React from 'react'
 import Icons from '../Icons';
 
@@ -13,7 +11,6 @@ const handleBarCodeScanned = ({ type, data }) => {
 }
 
 const Home = () => {
-
     const [FlashOn, setFlashOn] = useState(false)
     const [Type, setType] = useState(false)
 
@@ -21,9 +18,9 @@ const Home = () => {
         setType(!Type)
     }
 
-    const HandleTorch = () => {
+    const HandleTorch = async () => {
         setFlashOn(!FlashOn)
-        Torch.switchState(FlashOn)
+
     }
 
     return (
@@ -41,7 +38,7 @@ const Home = () => {
 
             </View>
             {/* This is where we style our top bar pretty cool right */}
-            <View style={{ flex: 1, flexDirection: 'row', position: 'absolute', backgroundColor: '#333333', alignItems: 'center', top: 0, margin: 50, height: 50, borderRadius: 8, gap: 70 }}>
+            <View style={{ flex: 1, width: '90%', justifyContent: 'space-between', flexDirection: 'row', position: 'absolute', backgroundColor: '#333333', alignItems: 'center', top: 0, margin: 50, height: 50, borderRadius: 8, }}>
                 <TouchableOpacity style={{ margin: 20 }} onPress={HandleTorch}>
                     <Image source={Icons.FlashIcon} resizeMode="contain" style={{ height: 30, width: 30, tintColor: 'white' }} />
                 </TouchableOpacity>
